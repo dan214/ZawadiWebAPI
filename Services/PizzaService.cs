@@ -1,7 +1,7 @@
 ﻿using System.Xml.Linq;
-using ZawadiWholesaleWebAPI.Models;
+using ZetechWebAPI.Models;
 
-namespace ZawadiWholesaleWebAPI.Services
+namespace ZetechWebAPI.Services
 {
     public static class PizzaService
     {

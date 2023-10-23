@@ -1,21 +1,26 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ZawadiWholesaleWebAPI.Models;
-using ZawadiWholesaleWebAPI.Services;
+using ZetechWebAPI.Models;
+using ZetechWebAPI.Services;
 
-namespace ZawadiWholesaleWebAPI.Controllers
+namespace ZetechWebAPI.Controllers
 {
     [ApiController]
     [Route("[controller]")]
     public class PizzaController : Controller
     {
-        public PizzaController()
+        private readonly ZetechDbContext _dbContext;
+        public PizzaController(ZetechDbContext dbContext)
         {
+            _dbContext = dbContext;
         }
         // GET all action
 
         [HttpGet]
-        public ActionResult<List<Pizza>> GetAll() =>
-    PizzaService.GetAll();
+        public ActionResult<IEnumerable<Pizza>> GetAll()
+        {
+            return _dbContext.Pizza.ToList();
+        }
+
 
         [HttpGet("{id}")]
         public IActionResult GetPizza(int id){ 

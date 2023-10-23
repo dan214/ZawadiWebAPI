@@ -1,4 +1,4 @@
-﻿namespace ZawadiWholesaleWebAPI.Models
+﻿namespace ZetechWebAPI.Models
 {
     public class Pizza
     {

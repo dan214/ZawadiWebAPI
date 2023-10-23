@@ -9,7 +9,7 @@
     }
   },
   "profiles": {
-    "ZawadiWholesaleWebAPI": {
+    "ZetechWebAPI": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,

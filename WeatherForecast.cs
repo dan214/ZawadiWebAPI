@@ -1,4 +1,4 @@
-namespace ZawadiWholesaleWebAPI
+namespace ZetechWebAPI
 {
     public class WeatherForecast
     {

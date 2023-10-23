@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace ZawadiWholesaleWebAPI.Controllers
+namespace ZetechWebAPI.Controllers
 {
     [ApiController]
     [Route("[controller]")]

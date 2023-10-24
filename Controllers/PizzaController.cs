@@ -8,23 +8,22 @@ namespace ZetechWebAPI.Controllers
     [Route("[controller]")]
     public class PizzaController : Controller
     {
-        private readonly ZetechDbContext _dbContext;
-        public PizzaController(ZetechDbContext dbContext)
+        private readonly IPizzaService _pizzaService;
+        public PizzaController(ZetechDbContext dbContext, IPizzaService pizzaService)
         {
-            _dbContext = dbContext;
+            _pizzaService = pizzaService;
         }
         // GET all action
 
         [HttpGet]
         public ActionResult<IEnumerable<Pizza>> GetAll()
         {
-            return _dbContext.Pizza.ToList();
+            return _pizzaService.GetAll();
         }
-
 
         [HttpGet("{id}")]
         public IActionResult GetPizza(int id){ 
-            var pizza = PizzaService.Get(id);
+            var pizza = _pizzaService.Get(id);
 
             if(pizza == null)
             {
@@ -36,7 +35,7 @@ namespace ZetechWebAPI.Controllers
         [HttpPost]
         public IActionResult Create(Pizza pizza)
         {
-            PizzaService.Add(pizza);
+            _pizzaService.Add(pizza);
             return Ok();
         }
 
@@ -47,11 +46,11 @@ namespace ZetechWebAPI.Controllers
             if (id != pizza.Id)
                 return BadRequest();
 
-            var existingPizza = PizzaService.Get(id);
+            var existingPizza = _pizzaService.Get(id);
             if (existingPizza is null)
                 return NotFound();
 
-            PizzaService.Update(pizza);
+            _pizzaService.Update(pizza);
 
             return NoContent();
         }
@@ -59,12 +58,12 @@ namespace ZetechWebAPI.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            var pizza = PizzaService.Get(id);
+            var pizza = _pizzaService.Get(id);
 
             if (pizza is null)
                 return NotFound();
 
-            PizzaService.Delete(id);
+            _pizzaService.Delete(id);
 
             return NoContent();
         }

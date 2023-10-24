@@ -9,5 +9,7 @@ namespace ZetechWebAPI.Models
         }
 
         public DbSet<Pizza> Pizza { get; set; }
+        public DbSet<Course> Course { get; set; }
+        public DbSet<Batch> Batch { get; set; }
     }
 }

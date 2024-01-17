@@ -18,6 +18,16 @@ builder.Services.AddScoped<IPizzaService,PizzaService>();
 builder.Services.AddScoped<ICourseService, CourseService>();
 builder.Services.AddScoped<IBatchService, BatchService>();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("ClientPermission", policy =>
+    {
+        policy.AllowAnyHeader()
+              .AllowAnyMethod()
+              .AllowAnyOrigin();
+    });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -32,5 +42,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseCors("ClientPermission");
 
 app.Run();

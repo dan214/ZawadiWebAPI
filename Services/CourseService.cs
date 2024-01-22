@@ -22,13 +22,18 @@ namespace ZetechWebAPI.Services
             Courses.Add(course);
         }
 
-        public void Delete(int id)
+        public void Delete(Course course)
         {
-            var course = Get(id);
-            if (course is null)
-                return;
+            _dbContext.Course.Remove(course);
 
-            Courses.Remove(course);
+            try
+            {
+                _dbContext.SaveChanges();
+            }
+            catch (Exception)
+            {
+                return;
+            }
         }
 
         public void Update(Course course)

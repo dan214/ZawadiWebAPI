@@ -34,5 +34,27 @@ namespace ZetechWebAPI.Controllers
             }
             return Ok(course);
         }
-    }
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            var course = _courseService.Get(id);
+
+            if (course == null)
+            {
+                return NotFound();
+            }
+
+            try
+            {
+                _courseService.Delete(course);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+            return Ok(course);
+        }
+        }
 }

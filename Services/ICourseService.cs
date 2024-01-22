@@ -9,7 +9,7 @@ namespace ZetechWebAPI.Services
 
         void Add(Course Course);
 
-        void Delete(int id);
+        void Delete(Course course);
         void Update(Course course);
     }
 }

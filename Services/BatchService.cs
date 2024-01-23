@@ -22,13 +22,18 @@ namespace ZetechWebAPI.Services
             Batches.Add(batch);
         }
 
-        public void Delete(int id)
+        public void Delete(Batch batch)
         {
-            var batch = Get(id);
-            if (batch is null)
-                return;
+            _dbContext.Batch.Remove(batch);
 
-            Batches.Remove(batch);
+            try
+            {
+                _dbContext.SaveChanges();
+            }
+            catch (Exception)
+            {
+                return;
+            }
         }
 
         public void Update(Batch batch)

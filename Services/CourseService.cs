@@ -17,9 +17,20 @@ namespace ZetechWebAPI.Services
 
         public Course? Get(int id) => Courses.FirstOrDefault(p => p.CourseId == id);
 
-        public void Add(Course course)
+        public Course Add(Course course)
         {
-            Courses.Add(course);
+            if(course == null) throw new ArgumentNullException(nameof(course));
+            _dbContext.Course.Add(course);
+
+            try
+            {
+                _dbContext.SaveChanges();
+            }catch (Exception)
+            {
+                throw;
+            }
+
+            return course;
         }
 
         public void Delete(Course course)

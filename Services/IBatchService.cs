@@ -9,7 +9,7 @@ namespace ZetechWebAPI.Services
 
         void Add(Batch batch);
 
-        void Delete(int id);
+        void Delete(Batch batch);
         void Update(Batch batch);
     }
 }

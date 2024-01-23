@@ -34,5 +34,27 @@ namespace ZetechWebAPI.Controllers
             }
             return Ok(course);
         }
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            var batch = _batchService.Get(id);
+
+            if (batch == null)
+            {
+                return NotFound();
+            }
+
+            try
+            {
+                _batchService.Delete(batch);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+            return Ok(batch);
+        }
     }
 }

@@ -22,6 +22,24 @@ namespace ZetechWebAPI.Controllers
             return _courseService.GetAll();
         }
 
+        [HttpPost]
+        public IActionResult Create([FromBody]Course course)
+        {
+            if (course == null)
+            {
+                return BadRequest("Invalid item data");
+            }
+            try
+            {
+                var addedCourse = _courseService.Add(course);
+                return CreatedAtRoute("DefaultApi", new { id = addedCourse.CourseId }, addedCourse);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
         [HttpGet("{id}")]
         // GET: CourseController/Details/5
         public ActionResult Details(int id)

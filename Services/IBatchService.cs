@@ -7,9 +7,9 @@ namespace ZetechWebAPI.Services
         List<Batch> GetAll();
         Batch? Get(int id);
 
-        void Add(Batch batch);
+        Batch Add(Batch batch);
 
-        void Delete(int id);
+        void Delete(Batch batch);
         void Update(Batch batch);
     }
 }

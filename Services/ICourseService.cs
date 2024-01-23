@@ -7,7 +7,7 @@ namespace ZetechWebAPI.Services
         List<Course> GetAll();
         Course? Get(int id);
 
-        void Add(Course Course);
+        Course Add(Course Course);
 
         void Delete(Course course);
         void Update(Course course);

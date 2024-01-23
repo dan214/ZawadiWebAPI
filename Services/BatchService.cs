@@ -17,9 +17,21 @@ namespace ZetechWebAPI.Services
 
         public Batch? Get(int id) => Batches.FirstOrDefault(p => p.BatchId == id);
 
-        public void Add(Batch batch)
+        public Batch Add(Batch batch)
         {
-            Batches.Add(batch);
+            if (batch == null) throw new ArgumentNullException(nameof(batch));
+            _dbContext.Batch.Add(batch);
+
+            try
+            {
+                _dbContext.SaveChanges();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+            return batch;
         }
 
         public void Delete(Batch batch)

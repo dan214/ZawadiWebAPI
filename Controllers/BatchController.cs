@@ -35,6 +35,24 @@ namespace ZetechWebAPI.Controllers
             return Ok(course);
         }
 
+        [HttpPost]
+        public IActionResult Create([FromBody] Batch batch)
+        {
+            if (batch == null)
+            {
+                return BadRequest("Invalid item data");
+            }
+            try
+            {
+                var addedBatch = _batchService.Add(batch);
+                return CreatedAtRoute("DefaultApi", new { id = addedBatch.BatchId }, addedBatch);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {

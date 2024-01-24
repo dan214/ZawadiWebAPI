@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json.Serialization;
+using System.Text.Json;
 using ZetechWebAPI.Models;
 using ZetechWebAPI.Services;
 
@@ -19,7 +21,16 @@ namespace ZetechWebAPI.Controllers
         // GET: CourseController
         public ActionResult<IEnumerable<Course>> Index()
         {
-            return _courseService.GetAll();
+            var courses = _courseService.GetAll();
+
+            var jsonOptions = new JsonSerializerOptions
+            {
+                ReferenceHandler = ReferenceHandler.IgnoreCycles,
+            };
+
+            var json = JsonSerializer.Serialize(courses, jsonOptions);
+
+            return Ok(json);
         }
 
         [HttpPost]

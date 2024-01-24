@@ -11,6 +11,8 @@ namespace ZetechWebAPI.Models
 
         public Batch? Batch { get; set; }
 
+        public int? BatchId { get; set; }
+
         public DateTime? DateCreated { get; set; }
 
     }

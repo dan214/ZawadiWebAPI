@@ -1,4 +1,5 @@
-﻿using System.Xml.Linq;
+﻿using Microsoft.EntityFrameworkCore;
+using System.Xml.Linq;
 using ZetechWebAPI.Models;
 
 namespace ZetechWebAPI.Services
@@ -10,7 +11,7 @@ namespace ZetechWebAPI.Services
         public CourseService(ZetechDbContext dbContext)
         {
             _dbContext = dbContext;
-            Courses = _dbContext.Course.ToList();
+            Courses = _dbContext.Course.Include(c => c.Batch).ToList();
         }
 
         public List<Course> GetAll() => Courses;

@@ -17,7 +17,7 @@ namespace ZetechWebAPI.Controllers
 
         [HttpGet]
         // GET: BatchController
-        public ActionResult<IEnumerable<Batch>> Index()
+        public ActionResult<IEnumerable<BatchEntity>> Index()
         {
             return _batchService.GetAll();
         }

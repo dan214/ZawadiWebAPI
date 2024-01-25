@@ -4,7 +4,7 @@ namespace ZetechWebAPI.Services
 {
     public interface ICourseService
     {
-        List<Course> GetAll();
+        List<CourseEntity> GetAll();
         Course? Get(int id);
 
         Course Add(Course Course);

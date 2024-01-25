@@ -4,7 +4,7 @@ namespace ZetechWebAPI.Services
 {
     public interface IBatchService
     {
-        List<Batch> GetAll();
+        List<BatchEntity> GetAll();
         Batch? Get(int id);
 
         Batch Add(Batch batch);

@@ -19,18 +19,9 @@ namespace ZetechWebAPI.Controllers
 
         [HttpGet]
         // GET: CourseController
-        public ActionResult<IEnumerable<Course>> Index()
+        public ActionResult<IEnumerable<CourseEntity>> Index()
         {
-            var courses = _courseService.GetAll();
-
-            var jsonOptions = new JsonSerializerOptions
-            {
-                ReferenceHandler = ReferenceHandler.IgnoreCycles,
-            };
-
-            var json = JsonSerializer.Serialize(courses, jsonOptions);
-
-            return Ok(json);
+            return _courseService.GetAll();
         }
 
         [HttpPost]
@@ -61,7 +52,14 @@ namespace ZetechWebAPI.Controllers
             {
                 return NotFound();
             }
-            return Ok(course);
+
+            var jsonOptions = new JsonSerializerOptions
+            {
+                ReferenceHandler = ReferenceHandler.IgnoreCycles,
+            };
+
+            var json = JsonSerializer.Serialize(course, jsonOptions);
+            return Ok(json);
         }
 
         [HttpDelete("{id}")]

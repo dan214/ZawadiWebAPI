@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Xml.Linq;
 using ZetechWebAPI.Models;
+using System.Linq;
 
 namespace ZetechWebAPI.Services
 {
@@ -11,10 +12,23 @@ namespace ZetechWebAPI.Services
         public CourseService(ZetechDbContext dbContext)
         {
             _dbContext = dbContext;
-            Courses = _dbContext.Course.Include(c => c.Batch).ToList();
+            Courses = _dbContext.Course.ToList();
         }
 
-        public List<Course> GetAll() => Courses;
+        public List<CourseEntity> GetAll()
+        {
+            var courses = _dbContext.Course.ToList();
+            return (from course in courses
+                    let courseEntity = new CourseEntity
+                    {
+                        CourseId = course.CourseId,
+                        CourseName = course.CourseName,
+                        Description = course.Description,
+                        DateCreated = course.DateCreated,
+                        Batch = _dbContext.Batch.FirstOrDefault(c => c.BatchId == course.BatchId)
+                    }
+                    select courseEntity).ToList();
+        }
 
         public Course? Get(int id) => Courses.FirstOrDefault(p => p.CourseId == id);
 

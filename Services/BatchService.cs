@@ -13,7 +13,20 @@ namespace ZetechWebAPI.Services
             Batches = _dbContext.Batch.ToList();
         }
 
-        public List<Batch> GetAll() => Batches;
+        public List<BatchEntity> GetAll()
+        {
+            var batches = _dbContext.Batch.ToList();
+            return (from batch in Batches
+                    let courseEntity = new BatchEntity
+                    {
+                        BatchId = batch.BatchId,
+                        BatchName = batch.BatchName,
+                        Description = batch.Description,
+                        DateCreated = batch.DateCreated,
+                        Courses = _dbContext.Course.Where(c => c.BatchId == batch.BatchId).ToList()
+                    }
+                    select courseEntity).ToList();
+        }
 
         public Batch? Get(int id) => Batches.FirstOrDefault(p => p.BatchId == id);
 

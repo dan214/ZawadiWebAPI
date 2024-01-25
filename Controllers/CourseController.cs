@@ -44,7 +44,7 @@ namespace ZetechWebAPI.Controllers
 
         [HttpGet("{id}")]
         // GET: CourseController/Details/5
-        public ActionResult Details(int id)
+        public ActionResult<CourseEntity> Details(int id)
         {
             var course = _courseService.Get(id);
 
@@ -53,35 +53,22 @@ namespace ZetechWebAPI.Controllers
                 return NotFound();
             }
 
-            var jsonOptions = new JsonSerializerOptions
-            {
-                ReferenceHandler = ReferenceHandler.IgnoreCycles,
-            };
-
-            var json = JsonSerializer.Serialize(course, jsonOptions);
-            return Ok(json);
+            return course;
         }
 
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            var course = _courseService.Get(id);
-
-            if (course == null)
-            {
-                return NotFound();
-            }
-
             try
             {
-                _courseService.Delete(course);
+                _courseService.Delete(id);
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
 
-            return Ok(course);
+            return Ok();
         }
         }
 }

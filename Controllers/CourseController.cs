@@ -56,6 +56,29 @@ namespace ZetechWebAPI.Controllers
             return course;
         }
 
+        [HttpPut("{id}")]
+        public IActionResult Update(int id, Course course)
+        {
+            if (id != course.CourseId)
+                return BadRequest();
+
+            var existingCourse = _courseService.Get(id);
+            if (existingCourse is null)
+                return NotFound();
+
+            try
+            {
+                _courseService.Update(course);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+            return Ok();
+
+        }
+
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {

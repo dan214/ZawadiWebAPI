@@ -10,6 +10,6 @@ namespace ZetechWebAPI.Services
         Course Add(Course Course);
 
         void Delete(int id);
-        void Update(Course course);
+        Course Update(Course course);
     }
 }

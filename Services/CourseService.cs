@@ -30,7 +30,22 @@ namespace ZetechWebAPI.Services
                     select courseEntity).ToList();
         }
 
-        public Course? Get(int id) => Courses.FirstOrDefault(p => p.CourseId == id);
+        public CourseEntity? Get(int id)
+        {
+            var course = _dbContext.Course.FirstOrDefault(p => p.CourseId == id);
+            if (course == null) throw new ArgumentNullException(nameof(course));
+
+            var courseEntity = new CourseEntity
+            {
+                CourseId = course.CourseId,
+                CourseName = course.CourseName,
+                Description = course.Description,
+                DateCreated = course.DateCreated,
+                Batch = _dbContext.Batch.FirstOrDefault(c => c.BatchId == course.BatchId)
+            };
+
+            return courseEntity;
+        }
 
         public Course Add(Course course)
         {
@@ -48,8 +63,11 @@ namespace ZetechWebAPI.Services
             return course;
         }
 
-        public void Delete(Course course)
+        public void Delete(int id)
         {
+            var course = _dbContext.Course.FirstOrDefault(c => c.CourseId == id);
+            if (course == null) throw new ArgumentNullException(nameof(course));
+
             _dbContext.Course.Remove(course);
 
             try
@@ -62,13 +80,21 @@ namespace ZetechWebAPI.Services
             }
         }
 
-        public void Update(Course course)
+        public Course Update(Course course)
         {
-            var index = Courses.FindIndex(p => p.CourseId == course.CourseId);
-            if (index == -1)
-                return;
+            if (course == null) throw new ArgumentNullException(nameof(course));
+            _dbContext.Course.Update(course);
 
-            Courses[index] = course;
+            try
+            {
+                _dbContext.SaveChanges();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+            return course;
         }
     }
 }
